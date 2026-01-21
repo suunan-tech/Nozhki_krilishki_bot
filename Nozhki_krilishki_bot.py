@@ -591,4 +591,24 @@ def run_bot():
 
 # === ЗАПУСК ===
 if __name__ == "__main__":
+
     run_bot()
+
+from flask import Flask
+import threading
+
+# Пустой веб-сервер
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return "Bot is running!"
+
+# Запускаем бота в отдельном потоке
+def start_bot():
+    bot.polling(none_stop=True, interval=1, timeout=30)
+
+threading.Thread(target=start_bot).start()
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=8000)
