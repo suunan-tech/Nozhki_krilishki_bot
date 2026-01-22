@@ -597,18 +597,21 @@ if __name__ == "__main__":
 from flask import Flask
 import threading
 
-# Пустой веб-сервер
+# === ПУСТОЙ ВЕБ-СЕРВЕР ДЛЯ RENDER ===
 app = Flask(__name__)
 
 @app.route('/')
 def hello():
     return "Bot is running!"
 
-# Запускаем бота в отдельном потоке
 def start_bot():
+    """Запускаем бота в отдельном потоке"""
     bot.polling(none_stop=True, interval=1, timeout=30)
 
-threading.Thread(target=start_bot).start()
+# Запускаем бота в фоне
+threading.Thread(target=start_bot, daemon=True).start()
 
+# Запускаем веб-сервер на порту 8000
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000)
+
